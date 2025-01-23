@@ -25,8 +25,26 @@ local plugins = {
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
-        "nvim-treesitter/nvim-treesitter", 
-        build = ":TSUpdate"
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        opts = {
+            ensure_installed = {
+                "lua",
+                "vim",
+                "vimdoc",
+                "javascript",
+                "typescript",
+                "python",
+                "java",
+                "c",
+                "cpp",
+                "bash",
+                "markdown",
+                "markdown_inline",
+            },
+            highlight = { enable = true },
+            indent = { enable = true },
+        },
     },
     {
         "nvim-tree/nvim-tree.lua",
@@ -49,4 +67,10 @@ vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent
 -- Configuration des icônes personnalisées
 local web_devicons = require("nvim-web-devicons")
 
+
+
+-- Configuration de Telescope
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 
