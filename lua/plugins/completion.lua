@@ -6,6 +6,30 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       { "antosha417/nvim-lsp-file-operations", config = true },
     },
+    config = function()
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Configuration de Phpactor pour PHP
+      lspconfig.phpactor.setup({
+        capabilities = capabilities,
+        root_dir = function(_)
+          return vim.loop.cwd()
+        end,
+        init_options = {
+          ["language_server.diagnostics_on_update"] = false,
+          ["language_server.diagnostics_on_open"] = false,
+          ["language_server.diagnostics_on_save"] = false,
+          ["language_server_phpstan.enabled"] = false,
+          ["language_server_psalm.enabled"] = false,
+        },
+        on_attach = function(client, bufnr)
+          -- Ajoutez ici des keymaps spécifiques à PHP si nécessaire
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap=true, silent=true})
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+        end,
+      })
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -55,6 +79,7 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
+        "phpactor", -- Ajout de Phpactor pour PHP
       },
     },
     config = function(_, opts)
