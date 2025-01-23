@@ -13,23 +13,8 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {}
 local plugins = {
-    {
-        'nvim-telescope/telescope.nvim', 
-        tag = '0.1.8',
-        dependencies = { 'nvim-lua/plenary.nvim' }
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate",
-        opts = {
-            ensure_installed = {
-                "lua", "vim", "vimdoc", "javascript", "typescript",
-                "python", "java", "c", "cpp", "bash", "markdown", "markdown_inline",
-            },
-            highlight = { enable = true },
-            indent = { enable = true },
-        },
-    },
+    require("telescope"),
+    require("treesitter"),
     {
         "nvim-tree/nvim-tree.lua",
         version = "*",
@@ -39,16 +24,7 @@ local plugins = {
             require("nvim-tree").setup {}
         end,
     },
-    {
-        "kdheepak/lazygit.nvim",
-        lazy = true,
-        cmd = {
-            "LazyGit", "LazyGitConfig", "LazyGitCurrentFile",
-            "LazyGitFilter", "LazyGitFilterCurrentFile",
-        },
-        dependencies = { "nvim-lua/plenary.nvim" },
-        keys = { { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" } }
-    },
+    require("lazygit"),
     {
         'lewis6991/gitsigns.nvim',
         config = function()
@@ -89,7 +65,6 @@ local plugins = {
                     row = 0,
                     col = 1
                 },
-                yadm = { enable = false },
                 on_attach = function(bufnr)
                     local gs = package.loaded.gitsigns
 
@@ -136,4 +111,3 @@ local plugins = {
 }
 
 require("lazy").setup(plugins, opts)
-
