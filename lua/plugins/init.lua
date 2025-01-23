@@ -16,25 +16,9 @@ local plugins = {
     require("plugins.completion"),
     require("plugins.telescope"),
     require("plugins.treesitter"),
-    {
-        "nvim-tree/nvim-tree.lua",
-        version = "*",
-        lazy = false,
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        config = function()
-            require("nvim-tree").setup {}
-        end,
-    },
-    {
-        "kdheepak/lazygit.nvim",
-        lazy = true,
-        cmd = {
-            "LazyGit", "LazyGitConfig", "LazyGitCurrentFile",
-            "LazyGitFilter", "LazyGitFilterCurrentFile",
-        },
-        dependencies = { "nvim-lua/plenary.nvim" },
-        keys = { { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" } }
-    },
+    require("plugins.nvim-tree"),
+    require("plugins.lazygit"),
+    require("plugins.copilot"),
     {
         'lewis6991/gitsigns.nvim',
         config = function()
@@ -47,6 +31,7 @@ local plugins = {
                     changedelete = { text = '~' },
                     untracked    = { text = '┆' },
                 },
+                
                 signcolumn = true,
                 numhl = false,
                 linehl = false,
