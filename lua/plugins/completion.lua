@@ -10,7 +10,7 @@ return {
       local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Configuration de Phpactor pour PHP
+      -- Configuration pour PHP avec Phpactor
       lspconfig.phpactor.setup({
         capabilities = capabilities,
         root_dir = function(_)
@@ -24,9 +24,19 @@ return {
           ["language_server_psalm.enabled"] = false,
         },
         on_attach = function(client, bufnr)
-          -- Ajoutez ici des keymaps spécifiques à PHP si nécessaire
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap=true, silent=true})
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap=true, silent=true})
+          -- Keymaps spécifiques à PHP
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+        end,
+      })
+
+      -- Configuration pour XML avec Lemminx
+      lspconfig.lemminx.setup({
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          -- Keymaps spécifiques à XML (si nécessaire)
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
         end,
       })
     end,
@@ -79,7 +89,8 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
-        "phpactor", -- Ajout de Phpactor pour PHP
+        "phpactor", -- Phpactor pour PHP
+        "lemminx",  -- Lemminx pour XML
       },
     },
     config = function(_, opts)
